@@ -124,7 +124,7 @@ export default function ProfilePage() {
             >
               <span className="text-base font-medium font-barlow">Editar perfil</span>
             </button>
-            <div className="mt-2 block sm:hidden w-full flex justify-center">
+            <div className="mt-2 sm:hidden w-full flex justify-center">
               <button
                 className="h-10 rounded-xl border border-[#303030] bg-[#303030] text-white w-full max-w-36"
                 onClick={() => setShowEditModal(true)}

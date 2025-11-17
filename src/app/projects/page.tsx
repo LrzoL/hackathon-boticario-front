@@ -5,6 +5,15 @@ import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import Footer from "@/components/ui/Footer";
 import Header from "@/components/ui/Header";
 
+// TIPAGEM DAS TAREFAS
+type Task = {
+  id: number | string;
+  titulo: string;
+  descricao?: string;
+  tags: string[];
+};
+
+// TIPAGEM DOS PROJETOS
 type Projeto = {
   id: number;
   titulo: string;
@@ -14,7 +23,6 @@ type Projeto = {
 };
 
 export default function ProjectsPage() {
-  // Estados
   const [showAddModal, setShowAddModal] = useState(false);
   const [titulo, setTitulo] = useState("");
   const [descricao, setDescricao] = useState("");
@@ -23,29 +31,30 @@ export default function ProjectsPage() {
   const [expandedIds, setExpandedIds] = useState<number[]>([]);
 
   const [projetos, setProjetos] = useState<Projeto[]>([]);
-  const [tasks, setTasks] = useState<any[]>([]); // array de objetos tarefa
+  const [tasks, setTasks] = useState<Task[]>([]);
   const [selectedProjectId, setSelectedProjectId] = useState<number | null>(null);
 
-  // Carregar só uma vez do localStorage
+  // Carregar do localStorage
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedProjects = localStorage.getItem("projetos");
       if (storedProjects) setProjetos(JSON.parse(storedProjects));
+
       const storedTasks = localStorage.getItem("tarefas");
       if (storedTasks) setTasks(JSON.parse(storedTasks));
     }
   }, []);
 
-  // Salvar no localStorage ao mudar projetos
+  // Salvar projetos
   useEffect(() => {
-    if (typeof window !== "undefined" && projetos.length > 0) {
+    if (typeof window !== "undefined") {
       localStorage.setItem("projetos", JSON.stringify(projetos));
     }
   }, [projetos]);
 
-  // Salvar no localStorage ao mudar tarefas
+  // Salvar tarefas
   useEffect(() => {
-    if (typeof window !== "undefined" && tasks.length > 0) {
+    if (typeof window !== "undefined") {
       localStorage.setItem("tarefas", JSON.stringify(tasks));
     }
   }, [tasks]);
@@ -77,7 +86,7 @@ export default function ProjectsPage() {
     if (selectedProjectId === id) setSelectedProjectId(null);
   }
 
-  // Atualizar tarefas selecionadas do projeto
+  // Atualizar tarefas selecionadas
   function handleUpdateProjectTasks(projectId: number, newSelectedTasks: string[]) {
     setProjetos(prev =>
       prev.map(p =>
@@ -86,7 +95,7 @@ export default function ProjectsPage() {
     );
   }
 
-  // Alternar expandir/recolher tarefas no card
+  // Expandir/recolher lista de tarefas
   function toggleExpand(id: number) {
     setExpandedIds(prev =>
       prev.includes(id) ? prev.filter(eId => eId !== id) : [...prev, id]
@@ -163,13 +172,12 @@ export default function ProjectsPage() {
                         <span className="mt-1 inline-block text-[#C3EC1D] font-medium text-sm">#{proj.tag}</span>
                       )}
 
-                      {proj.selectedTasks && proj.selectedTasks.length > 0 && (
+                      {proj.selectedTasks?.length > 0 && (
                         <div className="mt-2 flex flex-col gap-1">
                           {(expandedIds.includes(proj.id)
                             ? proj.selectedTasks
                             : proj.selectedTasks.slice(0, 3)
                           ).map((taskId: string) => {
-                            // Pega objeto da tarefa pra exibir nome e descrição
                             const taskObj = tasks.find(t => String(t.id) === String(taskId));
                             if (!taskObj) return null;
                             return (
@@ -181,7 +189,7 @@ export default function ProjectsPage() {
                               </div>
                             );
                           })}
-                          {/* Mostrar reticências / expandir */}
+
                           {proj.selectedTasks.length > 3 && !expandedIds.includes(proj.id) && (
                             <button
                               className="mt-1 text-xs text-[#C3EC1D] hover:underline"
@@ -193,7 +201,7 @@ export default function ProjectsPage() {
                               ...ver todas
                             </button>
                           )}
-                          {/* Contrair */}
+
                           {proj.selectedTasks.length > 3 && expandedIds.includes(proj.id) && (
                             <button
                               className="mt-1 text-xs text-[#C3EC1D] hover:underline"
@@ -215,7 +223,7 @@ export default function ProjectsPage() {
           </main>
         </div>
 
-        {/* Modal adicionar projeto */}
+        {/* MODAL ADICIONAR PROJETO */}
         {showAddModal && (
           <>
             <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-998" />
@@ -267,7 +275,7 @@ export default function ProjectsPage() {
           </>
         )}
 
-        {/* Modal selecionar tarefas do projeto */}
+        {/* MODAL SELECIONAR TAREFAS */}
         {selectedProject && (
           <>
             <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-998" />
@@ -284,21 +292,21 @@ export default function ProjectsPage() {
                     {tasks
                       .filter(taskObj =>
                         Array.isArray(taskObj.tags) &&
-                        taskObj.tags.some(
-                          (                          tag: string) => tag.toLowerCase() === `#${selectedProject.tag}`.toLowerCase()
+                        taskObj.tags.some((tag: string) =>
+                          tag.toLowerCase() === `#${selectedProject.tag}`.toLowerCase()
                         )
                       )
                       .map((taskObj, idx) => (
                         <label key={idx} className="flex items-center gap-3 text-white cursor-pointer">
                           <input
                             type="checkbox"
-                            checked={selectedProject.selectedTasks?.includes(String(taskObj.id))}
+                            checked={selectedProject.selectedTasks.includes(String(taskObj.id))}
                             onChange={() => {
-                              const isSelected = selectedProject.selectedTasks?.includes(String(taskObj.id));
+                              const isSelected = selectedProject.selectedTasks.includes(String(taskObj.id));
                               const newTasks = isSelected
-                                ? selectedProject.selectedTasks.filter((t: string) => t !== String(taskObj.id))
-                                : [...(selectedProject.selectedTasks || []), String(taskObj.id)];
-                              // Aqui salva só o id das tarefas, mais seguro e estável.
+                                ? selectedProject.selectedTasks.filter(t => t !== String(taskObj.id))
+                                : [...selectedProject.selectedTasks, String(taskObj.id)];
+
                               handleUpdateProjectTasks(selectedProject.id, newTasks);
                             }}
                           />
