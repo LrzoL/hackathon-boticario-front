@@ -13,17 +13,17 @@ export default function Hearder() {
   <nav className="flex items-center justify-center md:justify-start gap-5 w-fit md:w-auto p-0 scale-90 md:scale-100 md:p-2.5">
     <Link href="/projects">
       <button className="flex w-8 h-8 items-center justify-center rounded-full hover:bg-yellow-400/10 transition">
-        <Image src="/frame 6.svg" width={32} height={32} alt="Menu" />
+        <Image src="/frame6.svg" width={32} height={32} alt="Menu" />
       </button>
     </Link>
     <Link href="/tasks">
       <button className="flex w-8 h-8 items-center justify-center rounded-full hover:bg-yellow-400/10 transition">
-        <Image src="/frame 4.svg" width={18} height={18} alt="" className="pointer-events-none" />
+        <Image src="/frame4.svg" width={18} height={18} alt="" className="pointer-events-none" />
       </button>
     </Link>
     <Link href="/profile">
       <button className="flex w-8 h-8 items-center justify-center rounded-full hover:bg-yellow-400/10 transition">
-        <Image src="/frame 7.svg" width={32} height={32} alt="Perfil" />
+        <Image src="/frame7.svg" width={32} height={32} alt="Perfil" />
       </button>
     </Link>
   </nav>

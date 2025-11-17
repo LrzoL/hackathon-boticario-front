@@ -53,7 +53,7 @@ export default function ResetPage() {
                 className="object-cover"
                 priority
               />
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+              <div className="absolute inset-0 rounded-2xl bg-linear-to-t from-black/70 via-black/30 to-transparent" />
               <div className="absolute left-6 top-6 text-lg font-semibold">
                 <span className="mr-2 rounded-md bg-black/60 px-2 py-1">⚡</span>
                 FOCO
