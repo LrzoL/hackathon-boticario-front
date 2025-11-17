@@ -55,7 +55,7 @@ export default function ProfilePage() {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = function(event) {
+      reader.onload = function (event) {
         const base64img = event.target?.result as string;
         setProfileImg(base64img);
         localStorage.setItem('profileImage', base64img);
@@ -84,12 +84,13 @@ export default function ProfilePage() {
         <div className="min-h-screen bg-[#0A0A0A] text-white px-5 py-12 flex flex-col gap-10">
           <div className="flex flex-col items-center gap-3 relative">
             <button
-              onClick={() => setShowEditModal(true)}
+              onClick={() => router.push('/settings')}
               className="absolute -top-4 right-4 md:right-120 md:top-6 hidden sm:block"
               title="Editar perfil"
             >
               <Image src="/settings.svg" alt="settings" height={32} width={32} />
             </button>
+
             {profileImg ? (
               <img
                 src={profileImg}

@@ -285,7 +285,7 @@ export default function ProjectsPage() {
                       .filter(taskObj =>
                         Array.isArray(taskObj.tags) &&
                         taskObj.tags.some(
-                          tag => tag.toLowerCase() === `#${selectedProject.tag}`.toLowerCase()
+                          (                          tag: string) => tag.toLowerCase() === `#${selectedProject.tag}`.toLowerCase()
                         )
                       )
                       .map((taskObj, idx) => (
