@@ -15,7 +15,7 @@ export function EditProfileModal({ isOpen, onClose, user }: EditProfileModalProp
       <div className="bg-[#111] w-full max-w-md md:max-w-2xl mx-4 rounded-2xl p-6 flex flex-col items-center">
         {/* Ícone/logo */}
         <div className="flex items-center gap-2 mb-5">
-          <Image src="/list-todo 1.svg" width={42} height={42} alt="Logo" />
+          <Image src="/list-todo1.svg" width={42} height={42} alt="Logo" />
           <span className="text-white font-bold text-2xl md:text-4xl">FOCO</span>
         </div>
 

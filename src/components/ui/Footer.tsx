@@ -7,7 +7,7 @@ export default function Footer() {
 
         {/* LOGOS JUNTOS (lado a lado) */}
         <div className="flex items-center gap-3">
-          <Image src="/list-todo 1.svg" alt="Logo lista de tarefas" width={32} height={20} />
+          <Image src="/list-todo1.svg" alt="Logo lista de tarefas" width={32} height={20} />
           <Image src="/FOCO.svg" alt="Logo FOCO" width={62} height={20} />
         </div>
 
